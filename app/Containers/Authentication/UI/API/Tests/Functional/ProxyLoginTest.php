@@ -2,7 +2,7 @@
 
 namespace App\Containers\User\UI\API\Tests\Functional;
 
-use App\Containers\User\Tests\TestCase;
+use App\Containers\Authentication\Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -55,8 +55,6 @@ class ProxyLoginTest extends TestCase
 
         $response = $this->endpoint($endpoint)->makeCall($data);
 
-        $responseContent = $this->getResponseContentArray();
-
         $response->assertStatus(200);
 
         $response->assertCookie('refreshToken');
@@ -66,8 +64,6 @@ class ProxyLoginTest extends TestCase
         ]);
 
         $this->assertResponseContainKeys(['expires_in', 'access_token']);
-
-        $this->assertArrayNotHasKey('refresh_token', $responseContent);
     }
 
     public function testClientWebAdminProxyUnconfirmedLogin_()
@@ -107,7 +103,12 @@ class ProxyLoginTest extends TestCase
 
         $response = $this->endpoint($endpoint)->makeCall($data);
 
-        $response->assertStatus(409);
+        if(\Config::get('authentication.require_email_confirmation')){
+            $response->assertStatus(409);
+        }else{
+            $response->assertStatus(200);
+        }
+
     }
 
 }
