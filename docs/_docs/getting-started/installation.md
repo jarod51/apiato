@@ -47,6 +47,12 @@ cd laradock
 ```
 This directory contains a `docker-compose.yml` file. (From the LaraDock project).
 
+2.1) If you haven't done so, rename `env-example` to `.env`.
+
+```shell
+cp env-example .env
+```
+
 3) Run the Docker containers:
 
 ```shell
@@ -306,12 +312,7 @@ Now let's see it in action
 1.b. Open your HTTP client and call: 
 
 - `http://api.apiato.dev/` You should see a JSON response with message: `"Welcome to apiato."`, 
-- `http://api.apiato.dev/v1` You should see a JSON response with message: `"Welcome to apiato (API V1)."`,
-
-Note: Your request MUST contain `Accept` => `application/json` in the HTTP header.
-
-If you try to open `api.apiato.dev` in browser you will get a **Missing JSON Header Exception**.   
-
+- `http://api.apiato.dev/v1` You should see a JSON response with message: `"Welcome to apiato (API V1)."`,   
 
 2) Make some HTTP calls to the API:
 
